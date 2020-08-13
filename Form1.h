@@ -149,6 +149,13 @@ void InitializeComponent(void)
 	this->PerformLayout();
 
 }
+
+static void
+exit_nicely(PGconn* conn)
+{
+	PQfinish(conn);
+	exit(1);
+}
 #pragma endregion
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 
@@ -159,9 +166,9 @@ void InitializeComponent(void)
 		iniWriter.WriteFloat("Setting", "Height", 1.82f);
 		iniWriter.WriteBoolean("Setting", "Marriage", false);
 		CIniReader iniReader(".\\Logger.ini");
-		char* szName;
-		//char* szName = iniReader.ReadString("Setting", "Name", "");
-		strcat(szName, "host=");
+		char* szName = iniReader.ReadString("Setting", "Name", "");
+		//char* szName="host";
+		/*strcat(szName, "host=");
 		strcat(szName, iniReader.ReadString("Login", "host", ""));
 		strcat(szName, " port=");
 		strcat(szName, iniReader.ReadString("Login", "port", ""));
@@ -170,7 +177,7 @@ void InitializeComponent(void)
 		strcat(szName, " user=");
 		strcat(szName, iniReader.ReadString("Login", "user", ""));
 		strcat(szName, " password=");
-		strcat(szName, iniReader.ReadString("Login", "password", ""));
+		strcat(szName, iniReader.ReadString("Login", "password", ""));*/
 		int iAge = iniReader.ReadInteger("Setting", "Age", 25);
 		float fltHieght = iniReader.ReadFloat("Setting", "Height", 1.80f);
 		bool bMarriage = iniReader.ReadBoolean("Setting", "Marriage", true);
@@ -180,108 +187,116 @@ void InitializeComponent(void)
 
 
 		
-		const char* dir= ".\\Logger.db";
-		DBreader db(dir);
-		//db.createDB();
-		char* sql;
-		std::string data;
-		for (int i = 1; i <= 2; i++)
-		{
+		//const char* dir= ".\\Logger.db";
+		//DBreader db(dir);
+		////db.createDB();
+		//char* sql;
+		//std::string data;
+		//for (int i = 1; i <= 2; i++)
+		//{
 
-			std::string sql1 = "SELECT Id, Name FROM Cars"; //WHERE Id ="+ std::to_string(i);
-			sql = strdup(sql1.c_str());
+		//	std::string sql1 = "SELECT Id, Name FROM Cars"; //WHERE Id ="+ std::to_string(i);
+		//	sql = strdup(sql1.c_str());
 
-			data = db.selectData( sql);
+		//	data = db.selectData( sql);
 
-			label1->Text = label1->Text  + gcnew String(strdup(data.c_str())) + "\r\n";
-			textBox1->Text = textBox1->Text + gcnew String(strdup(data.c_str())) + "\r\n";
-		}
-		label1->Text = label1->Text+"\n"+gcnew String(strdup(data.c_str()));
+		//	label1->Text = label1->Text  + gcnew String(strdup(data.c_str())) + "\r\n";
+		//	textBox1->Text = textBox1->Text + gcnew String(strdup(data.c_str())) + "\r\n";
+		//}
+		//label1->Text = label1->Text+"\n"+gcnew String(strdup(data.c_str()));
 
 		const char* conninfo;
 		PGconn* conn;
 		PGresult* res;
-		int         nFields;
-		int         i,
-                j;
+		int   nFields;
+		int   i,j;
 		conninfo = "host=localhost port=5432 dbname=mydb user=postgres password=asd";
+		
+
 		conn = PQconnectdb(conninfo);
+
+		/* Check to see that the backend connection was successfully made */
 		if (PQstatus(conn) != CONNECTION_OK)
 		{
-			label1->Text = "connection failed";
 			fprintf(stderr, "Connection to database failed: %s",
-			PQerrorMessage(conn));
-			PQfinish(conn);
+				PQerrorMessage(conn));
+			exit_nicely(conn);
 		}
-		else
+
+		/*
+		 * Our test case here involves using a cursor, for which we must be inside
+		 * a transaction block.  We could do the whole thing with a single
+		 * PQexec() of "select * from pg_database", but that's too trivial to make
+		 * a good example.
+		 */
+
+		 /* Start a transaction block */
+		res = PQexec(conn, "BEGIN");
+		if (PQresultStatus(res) != PGRES_COMMAND_OK)
 		{
-
-			//label1->Text = label1->Text + "connection done";
-			label1->Text = "connection done";
-
-
+			fprintf(stderr, "BEGIN command failed: %s", PQerrorMessage(conn));
+			PQclear(res);
+			exit_nicely(conn);
 		}
-		///* start a transaction block */
-		//res = PQexec(conn, "BEGIN");
-		//if (!res || PQresultStatus(res) != PGRES_COMMAND_OK)
-		//{
-		//	fprintf(stderr, "BEGIN command failed\n");
-		//	PQclear(res);
-		//	PQfinish(conn);
-		//}
 
-		///*
-		// * should PQclear PGresult whenever it is no longer needed to avoid
-		// * memory leaks
-		// */
-		//PQclear(res);
+		/*
+		 * Should PQclear PGresult whenever it is no longer needed to avoid memory
+		 * leaks
+		 */
+		PQclear(res);
 
-		///*
-		// * fetch rows from the pg_database, the system catalog of
-		// * databases
-		// */
-		//res = PQexec(conn, "DECLARE mycursor CURSOR FOR select * from pg_database");
-		//if (!res || PQresultStatus(res) != PGRES_COMMAND_OK)
-		//{
-		//	fprintf(stderr, "DECLARE CURSOR command failed\n");
-		//	PQclear(res);
-		//	PQfinish(conn);
-		//}
-		//PQclear(res);
-		//res = PQexec(conn, "FETCH ALL in mycursor");
-		//if (!res || PQresultStatus(res) != PGRES_TUPLES_OK)
-		//{
-		//	fprintf(stderr, "FETCH ALL command didn't return tuples properly\n");
-		//	PQclear(res);
-		//	PQfinish(conn);
-		//}
+		/*
+		 * Fetch rows from pg_database, the system catalog of databases
+		 */
+		res = PQexec(conn, "DECLARE myportal CURSOR FOR select * from table1");
+		if (PQresultStatus(res) != PGRES_COMMAND_OK)
+		{
+			fprintf(stderr, "DECLARE CURSOR failed: %s", PQerrorMessage(conn));
+			PQclear(res);
+			exit_nicely(conn);
+		}
+		PQclear(res);
 
-		///* first, print out the attribute names */
-		//nFields = PQnfields(res);
-		//for (i = 0; i < nFields; i++)
-		//	printf("%-15s", PQfname(res, i));
-		//printf("\n\n");
+		res = PQexec(conn, "FETCH ALL in myportal");
+		if (PQresultStatus(res) != PGRES_TUPLES_OK)
+		{
+			fprintf(stderr, "FETCH ALL failed: %s", PQerrorMessage(conn));
+			PQclear(res);
+			exit_nicely(conn);
+		}
 
-		///* next, print out the rows */
-		//for (i = 0; i < PQntuples(res); i++)
-		//{
-		//	for (j = 0; j < nFields; j++)
-		//		printf("%-15s", PQgetvalue(res, i, j));
-		//	printf("\n");
-		//}
-		//PQclear(res);
+		/* first, print out the attribute names */
+		nFields = PQnfields(res);
+		for (i = 0; i < nFields; i++)
+		{
+			printf("%-15s", PQfname(res, i));
+			label1->Text = label1->Text + gcnew String(PQfname(res, i)) + "\r\n";
+		}
+		printf("\n\n");
 
-		///* close the cursor */
-		//res = PQexec(conn, "CLOSE mycursor");
-		//PQclear(res);
+		/* next, print out the rows */
+		for (i = 0; i < PQntuples(res); i++)
+		{
+			for (j = 0; j < nFields; j++)
+			{
+				printf("%-15s", PQgetvalue(res, i, j));
+				label1->Text = label1->Text + gcnew String(PQgetvalue(res, i, j)) + "\r\n";
+			}
+			printf("\n");
+		}
 
-		///* commit the transaction */
-		//res = PQexec(conn, "COMMIT");
-		//PQclear(res);
+		PQclear(res);
 
-		///* close the connection to the database and cleanup */
-		//PQfinish(conn);
+		/* close the portal ... we don't bother to check for errors ... */
+		res = PQexec(conn, "CLOSE myportal");
+		PQclear(res);
 
+		/* end the transaction */
+		res = PQexec(conn, "END");
+		PQclear(res);
+
+		/* close the connection to the database and cleanup */
+		PQfinish(conn);
 
 		int lib_ver = PQlibVersion();
 
