@@ -1,0 +1,92 @@
+html, body 
+{
+	width:99%;
+    margin-left:4px;
+	margin-right:5px;
+	margin-bottom:5px;
+}
+.kolumna_wartosc 
+{
+    color: #043C77;
+	font-size: 14px;
+	margin-left: 25px; 
+}
+
+.naglowek 
+{
+    color: white;
+    font-size: 18px;
+	margin-left: 25px; 
+	font-family:Arial;
+}
+
+.kolumna_opis 
+{
+    color: #6F8294;
+	font-size: 14px;
+	margin-left: 25px; 
+}
+
+.dol_opis 
+{
+    color: white;
+	font-size: 14px;
+	font-family:Arial;
+	margin-left: 40px;
+}
+
+.z_bez_posuwu 
+{
+	margin-left: 58px;
+	color: #6F8294; 
+	font-size: 15px;
+}
+
+.p 
+{
+	vertical-align:middle;
+	padding:5px;
+	margin-left:20px;
+	text-align:center;
+	text-valign:middle;
+	font-size:14px;
+}
+.tabela
+{
+	font-size: 35px;
+}
+
+a:link 
+{
+
+}
+
+
+a:visited 
+{
+	
+}
+
+
+a:hover 
+{
+    color: blue;
+}
+
+
+a:active 
+{
+	
+}
+
+
+input[type=submit] 
+{
+	font-size: 18px;
+    padding:5px 15px; 
+    background:#ccc; 
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+}

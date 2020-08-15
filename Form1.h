@@ -3,6 +3,7 @@
 #include <string>
 #include <sqlite3.h>
 #include <algorithm>
+#include <windows.h>
 #include "IniReader.h"
 #include "IniWriter.h"
 #include "DBreader.h"
@@ -54,7 +55,7 @@ namespace Reports {
 	private: System::Windows::Forms::MenuStrip^ menuStrip1;
 	private: System::Windows::Forms::ToolStripMenuItem^ exitToolStripMenuItem;
 	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::ContextMenuStrip^ contextMenuStrip1;
+
 	private: System::ComponentModel::IContainer^ components;
 
 	private:
@@ -70,13 +71,11 @@ namespace Reports {
 /// </summary>
 void InitializeComponent(void)
 {
-	this->components = (gcnew System::ComponentModel::Container());
 	this->button1 = (gcnew System::Windows::Forms::Button());
 	this->label1 = (gcnew System::Windows::Forms::Label());
 	this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
 	this->exitToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 	this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-	this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
 	this->menuStrip1->SuspendLayout();
 	this->SuspendLayout();
 	// 
@@ -84,7 +83,7 @@ void InitializeComponent(void)
 	// 
 	this->button1->Location = System::Drawing::Point(106, 248);
 	this->button1->Name = L"button1";
-	this->button1->Size = System::Drawing::Size(264, 73);
+	this->button1->Size = System::Drawing::Size(250, 70);
 	this->button1->TabIndex = 0;
 	this->button1->Text = L"button1";
 	this->button1->UseVisualStyleBackColor = true;
@@ -95,9 +94,9 @@ void InitializeComponent(void)
 	this->label1->AutoSize = true;
 	this->label1->Location = System::Drawing::Point(145, 80);
 	this->label1->Name = L"label1";
-	this->label1->Size = System::Drawing::Size(35, 13);
+	this->label1->Size = System::Drawing::Size(41, 13);
 	this->label1->TabIndex = 1;
-	this->label1->Text = L"label1";
+	this->label1->Text = L"labelka";
 	// 
 	// menuStrip1
 	// 
@@ -121,13 +120,8 @@ void InitializeComponent(void)
 	this->textBox1->Multiline = true;
 	this->textBox1->Name = L"textBox1";
 	this->textBox1->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
-	this->textBox1->Size = System::Drawing::Size(199, 108);
+	this->textBox1->Size = System::Drawing::Size(200, 100);
 	this->textBox1->TabIndex = 3;
-	// 
-	// contextMenuStrip1
-	// 
-	this->contextMenuStrip1->Name = L"contextMenuStrip1";
-	this->contextMenuStrip1->Size = System::Drawing::Size(61, 4);
 	// 
 	// Form1
 	// 
@@ -205,6 +199,7 @@ exit_nicely(PGconn* conn)
 		//}
 		//label1->Text = label1->Text+"\n"+gcnew String(strdup(data.c_str()));
 
+		//MessageBox::Show("Hello, world.", "Important Message", MessageBoxButtons::YesNo);
 		const char* conninfo;
 		PGconn* conn;
 		PGresult* res;
@@ -302,6 +297,8 @@ exit_nicely(PGconn* conn)
 
 		printf("Version of libpq: %d\n", lib_ver);
 		//label1->Text = lib_ver.ToString();
+		//ShellExecute(NULL, "open", ".\\szablon.html", NULL, NULL, SW_SHOWNORMAL);
+		ShellExecute(NULL, "open", ".\\szablonhtml/szablon.html", NULL, NULL, SW_SHOWNORMAL);
 	
 	}
 
