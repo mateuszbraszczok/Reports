@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClCompile Include="DBreader.cpp" />
     <ClCompile Include="Form1.cpp" />
+    <ClCompile Include="HTML_changer.cpp" />
     <ClCompile Include="IniReader.cpp" />
     <ClCompile Include="IniWriter.cpp" />
     <ClCompile Include="sqlite3.c">
@@ -145,6 +146,7 @@
     <ClInclude Include="Form1.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="HTML_changer.h" />
     <ClInclude Include="IniReader.h" />
     <ClInclude Include="IniWriter.h" />
   </ItemGroup>

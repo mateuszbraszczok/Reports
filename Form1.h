@@ -4,15 +4,16 @@
 #include <sqlite3.h>
 #include <algorithm>
 #include <windows.h>
+#include <string>
 #include "IniReader.h"
 #include "IniWriter.h"
 #include "DBreader.h"
+#include "HTML_changer.h"
 #include<stdio.h>
 #include<stdlib.h>
 #include"libpq-fe.h"
 #include <libpq-fe.h>
-//#pragma comment(lib, "libpq.lib")
-//#include <pqxx/pqxx> 
+
 
 
 namespace Reports {
@@ -156,27 +157,17 @@ exit_nicely(PGconn* conn)
 
 		CIniWriter iniWriter(".\\Logger.ini");
 		iniWriter.WriteString("Setting", "Name", "jianxx");
+		iniWriter.WriteString("Date", "Time", "2020-08-16");
 		iniWriter.WriteInteger("Setting", "Age", 27);
 		iniWriter.WriteFloat("Setting", "Height", 1.82f);
 		iniWriter.WriteBoolean("Setting", "Marriage", false);
-		CIniReader iniReader(".\\Logger.ini");
-		char* szName = iniReader.ReadString("Setting", "Name", "");
-		//char* szName="host";
-		/*strcat(szName, "host=");
-		strcat(szName, iniReader.ReadString("Login", "host", ""));
-		strcat(szName, " port=");
-		strcat(szName, iniReader.ReadString("Login", "port", ""));
-		strcat(szName, " dbname=");
-		strcat(szName, iniReader.ReadString("Login", "dbname", ""));
-		strcat(szName, " user=");
-		strcat(szName, iniReader.ReadString("Login", "user", ""));
-		strcat(szName, " password=");
-		strcat(szName, iniReader.ReadString("Login", "password", ""));*/
-		int iAge = iniReader.ReadInteger("Setting", "Age", 25);
-		float fltHieght = iniReader.ReadFloat("Setting", "Height", 1.80f);
-		bool bMarriage = iniReader.ReadBoolean("Setting", "Marriage", true);
+		
 
-		label1->Text = gcnew String(szName);
+		/*int iAge = iniReader.ReadInteger("Setting", "Age", 25);
+		float fltHieght = iniReader.ReadFloat("Setting", "Height", 1.80f);
+		bool bMarriage = iniReader.ReadBoolean("Setting", "Marriage", true);*/
+
+		
 
 
 
@@ -206,9 +197,22 @@ exit_nicely(PGconn* conn)
 		int   nFields;
 		int   i,j;
 		conninfo = "host=localhost port=5432 dbname=mydb user=postgres password=asd";
-		
+		CIniReader iniReader(".\\Logger.ini");
 
-		conn = PQconnectdb(conninfo);
+
+		std::string login_data;
+		char* szName = iniReader.ReadString("Login", "host", "");
+		login_data += ("host=" + std::string(szName));
+		szName = iniReader.ReadString("Login", "port", "");
+		login_data += (" port=" + std::string(szName));
+		szName = iniReader.ReadString("Login", "dbname", "");
+		login_data += (" dbname=" + std::string(szName));
+		szName = iniReader.ReadString("Login", "user", "");
+		login_data += (" user=" + std::string(szName));
+		szName = iniReader.ReadString("Login", "password", "");
+		login_data += (" password=" + std::string(szName));
+
+		conn = PQconnectdb(login_data.c_str());
 
 		/* Check to see that the backend connection was successfully made */
 		if (PQstatus(conn) != CONNECTION_OK)
@@ -298,7 +302,10 @@ exit_nicely(PGconn* conn)
 		printf("Version of libpq: %d\n", lib_ver);
 		//label1->Text = lib_ver.ToString();
 		//ShellExecute(NULL, "open", ".\\szablon.html", NULL, NULL, SW_SHOWNORMAL);
-		ShellExecute(NULL, "open", ".\\szablonhtml/szablon.html", NULL, NULL, SW_SHOWNORMAL);
+		//ShellExecute(NULL, "open", ".\\szablonhtml/szablon.html", NULL, NULL, SW_SHOWNORMAL);
+		HTML_changer changer(".\\szablonhtml/szablon.html");
+		changer.kopiowanie_pliku();
+
 	
 	}
 
