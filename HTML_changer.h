@@ -1,14 +1,20 @@
 #pragma once
 #include <fstream>
+#include "IniReader.h"
+#include <string>
+#include <windows.h>
+#include"libpq-fe.h"
+#include <libpq-fe.h>
 class HTML_changer
 {
-public:
 	std::ifstream ifs;
 	std::ofstream ofs;
-	std::string save_file_name;
-	void kopiowanie_pliku();
+	std::string date;
+public:
+	void kopiowanie_pliku(System::Windows::Forms::Label^ label1);
 	HTML_changer(std::string nazwa);
 	
-
+	std::string findInDB(std::string query);
+	static void exit_nicely(PGconn* conn);
 };
 

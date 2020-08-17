@@ -93,7 +93,7 @@ void InitializeComponent(void)
 	// label1
 	// 
 	this->label1->AutoSize = true;
-	this->label1->Location = System::Drawing::Point(145, 80);
+	this->label1->Location = System::Drawing::Point(12, 54);
 	this->label1->Name = L"label1";
 	this->label1->Size = System::Drawing::Size(41, 13);
 	this->label1->TabIndex = 1;
@@ -104,7 +104,7 @@ void InitializeComponent(void)
 	this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->exitToolStripMenuItem });
 	this->menuStrip1->Location = System::Drawing::Point(0, 0);
 	this->menuStrip1->Name = L"menuStrip1";
-	this->menuStrip1->Size = System::Drawing::Size(584, 24);
+	this->menuStrip1->Size = System::Drawing::Size(784, 24);
 	this->menuStrip1->TabIndex = 2;
 	this->menuStrip1->Text = L"menuStrip1";
 	// 
@@ -128,7 +128,7 @@ void InitializeComponent(void)
 	// 
 	this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 	this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-	this->ClientSize = System::Drawing::Size(584, 361);
+	this->ClientSize = System::Drawing::Size(784, 361);
 	this->Controls->Add(this->textBox1);
 	this->Controls->Add(this->label1);
 	this->Controls->Add(this->button1);
@@ -145,19 +145,14 @@ void InitializeComponent(void)
 
 }
 
-static void
-exit_nicely(PGconn* conn)
-{
-	PQfinish(conn);
-	exit(1);
-}
+
 #pragma endregion
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 
 
 		CIniWriter iniWriter(".\\Logger.ini");
 		iniWriter.WriteString("Setting", "Name", "jianxx");
-		iniWriter.WriteString("Date", "Time", "2020-08-16");
+		iniWriter.WriteString("Date", "Time", "2020-08-17");
 		iniWriter.WriteInteger("Setting", "Age", 27);
 		iniWriter.WriteFloat("Setting", "Height", 1.82f);
 		iniWriter.WriteBoolean("Setting", "Marriage", false);
@@ -185,126 +180,19 @@ exit_nicely(PGconn* conn)
 
 		//	data = db.selectData( sql);
 
-		//	label1->Text = label1->Text  + gcnew String(strdup(data.c_str())) + "\r\n";
-		//	textBox1->Text = textBox1->Text + gcnew String(strdup(data.c_str())) + "\r\n";
+		//	label1->Text = label1->Text  + gcnew String(data.c_str()) + "\r\n";
+		//	textBox1->Text = textBox1->Text + gcnew String(data.c_str()) + "\r\n";
 		//}
-		//label1->Text = label1->Text+"\n"+gcnew String(strdup(data.c_str()));
+		//label1->Text = label1->Text+"\n"+gcnew String(data.c_str());
 
 		//MessageBox::Show("Hello, world.", "Important Message", MessageBoxButtons::YesNo);
-		const char* conninfo;
-		PGconn* conn;
-		PGresult* res;
-		int   nFields;
-		int   i,j;
-		conninfo = "host=localhost port=5432 dbname=mydb user=postgres password=asd";
-		CIniReader iniReader(".\\Logger.ini");
-
-
-		std::string login_data;
-		char* szName = iniReader.ReadString("Login", "host", "");
-		login_data += ("host=" + std::string(szName));
-		szName = iniReader.ReadString("Login", "port", "");
-		login_data += (" port=" + std::string(szName));
-		szName = iniReader.ReadString("Login", "dbname", "");
-		login_data += (" dbname=" + std::string(szName));
-		szName = iniReader.ReadString("Login", "user", "");
-		login_data += (" user=" + std::string(szName));
-		szName = iniReader.ReadString("Login", "password", "");
-		login_data += (" password=" + std::string(szName));
-
-		conn = PQconnectdb(login_data.c_str());
-
-		/* Check to see that the backend connection was successfully made */
-		if (PQstatus(conn) != CONNECTION_OK)
-		{
-			fprintf(stderr, "Connection to database failed: %s",
-				PQerrorMessage(conn));
-			exit_nicely(conn);
-		}
-
-		/*
-		 * Our test case here involves using a cursor, for which we must be inside
-		 * a transaction block.  We could do the whole thing with a single
-		 * PQexec() of "select * from pg_database", but that's too trivial to make
-		 * a good example.
-		 */
-
-		 /* Start a transaction block */
-		res = PQexec(conn, "BEGIN");
-		if (PQresultStatus(res) != PGRES_COMMAND_OK)
-		{
-			fprintf(stderr, "BEGIN command failed: %s", PQerrorMessage(conn));
-			PQclear(res);
-			exit_nicely(conn);
-		}
-
-		/*
-		 * Should PQclear PGresult whenever it is no longer needed to avoid memory
-		 * leaks
-		 */
-		PQclear(res);
-
-		/*
-		 * Fetch rows from pg_database, the system catalog of databases
-		 */
-		res = PQexec(conn, "DECLARE myportal CURSOR FOR select * from table1");
-		if (PQresultStatus(res) != PGRES_COMMAND_OK)
-		{
-			fprintf(stderr, "DECLARE CURSOR failed: %s", PQerrorMessage(conn));
-			PQclear(res);
-			exit_nicely(conn);
-		}
-		PQclear(res);
-
-		res = PQexec(conn, "FETCH ALL in myportal");
-		if (PQresultStatus(res) != PGRES_TUPLES_OK)
-		{
-			fprintf(stderr, "FETCH ALL failed: %s", PQerrorMessage(conn));
-			PQclear(res);
-			exit_nicely(conn);
-		}
-
-		/* first, print out the attribute names */
-		nFields = PQnfields(res);
-		for (i = 0; i < nFields; i++)
-		{
-			printf("%-15s", PQfname(res, i));
-			label1->Text = label1->Text + gcnew String(PQfname(res, i)) + "\r\n";
-		}
-		printf("\n\n");
-
-		/* next, print out the rows */
-		for (i = 0; i < PQntuples(res); i++)
-		{
-			for (j = 0; j < nFields; j++)
-			{
-				printf("%-15s", PQgetvalue(res, i, j));
-				label1->Text = label1->Text + gcnew String(PQgetvalue(res, i, j)) + "\r\n";
-			}
-			printf("\n");
-		}
-
-		PQclear(res);
-
-		/* close the portal ... we don't bother to check for errors ... */
-		res = PQexec(conn, "CLOSE myportal");
-		PQclear(res);
-
-		/* end the transaction */
-		res = PQexec(conn, "END");
-		PQclear(res);
-
-		/* close the connection to the database and cleanup */
-		PQfinish(conn);
+		
 
 		int lib_ver = PQlibVersion();
-
-		printf("Version of libpq: %d\n", lib_ver);
 		//label1->Text = lib_ver.ToString();
-		//ShellExecute(NULL, "open", ".\\szablon.html", NULL, NULL, SW_SHOWNORMAL);
 		//ShellExecute(NULL, "open", ".\\szablonhtml/szablon.html", NULL, NULL, SW_SHOWNORMAL);
 		HTML_changer changer(".\\szablonhtml/szablon.html");
-		changer.kopiowanie_pliku();
+		changer.kopiowanie_pliku(label1);
 
 	
 	}
