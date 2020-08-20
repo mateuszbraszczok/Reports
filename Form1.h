@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <sqlite3.h>
+
 #include <algorithm>
 #include <windows.h>
 #include <string>
@@ -152,7 +152,7 @@ void InitializeComponent(void)
 
 		CIniWriter iniWriter(".\\Logger.ini");
 		iniWriter.WriteString("Setting", "Name", "jianxx");
-		iniWriter.WriteString("Date", "Time", "2020-08-17");
+		iniWriter.WriteString("Date", "Time", "2020-08-16");
 		iniWriter.WriteInteger("Setting", "Age", 27);
 		iniWriter.WriteFloat("Setting", "Height", 1.82f);
 		iniWriter.WriteBoolean("Setting", "Marriage", false);
@@ -167,23 +167,23 @@ void InitializeComponent(void)
 
 
 		
-		//const char* dir= ".\\Logger.db";
-		//DBreader db(dir);
-		////db.createDB();
-		//char* sql;
-		//std::string data;
-		//for (int i = 1; i <= 2; i++)
-		//{
+		const char* dir= ".\\Logger.db";
+		DBreader db(dir);
+		//db.createDB();
+		char* sql;
+		std::string data;
+		for (int i = 1; i <= 2; i++)
+		{
 
-		//	std::string sql1 = "SELECT Id, Name FROM Cars"; //WHERE Id ="+ std::to_string(i);
-		//	sql = strdup(sql1.c_str());
+			std::string sql1 = "SELECT Id, Name FROM Cars"; //WHERE Id ="+ std::to_string(i);
+			sql = strdup(sql1.c_str());
 
-		//	data = db.selectData( sql);
+			data = db.selectData( sql);
 
-		//	label1->Text = label1->Text  + gcnew String(data.c_str()) + "\r\n";
-		//	textBox1->Text = textBox1->Text + gcnew String(data.c_str()) + "\r\n";
-		//}
-		//label1->Text = label1->Text+"\n"+gcnew String(data.c_str());
+			label1->Text = label1->Text  + gcnew String(data.c_str()) + "\r\n";
+			textBox1->Text = textBox1->Text + gcnew String(data.c_str()) + "\r\n";
+		}
+		label1->Text = label1->Text+"\n"+gcnew String(data.c_str());
 
 		//MessageBox::Show("Hello, world.", "Important Message", MessageBoxButtons::YesNo);
 		

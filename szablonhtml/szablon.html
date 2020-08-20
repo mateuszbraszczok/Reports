@@ -7,35 +7,35 @@
 </head>	
 <body>
 	<img src="images/top.jpg" width="100%" />
-			<table  width ="100%" cellspacing="0" cellpadding="0" >	
+		<table  width ="100%" cellspacing="0" cellpadding="0" >	
+		<tr>
+			<td colspan="3"> <div style="background-image:url(images/middle.jpg); background-repeat: no-repeat; background-attachment: fixed; background-size: cover" > 
+				<table width="95%"  cellspacing="5" cellpadding="5" align="center" valign="middle">
 				<tr>
-					<td colspan="3"> <div style="background-image:url(images/middle.jpg);" > 
-					<table width="95%"  cellspacing="5" cellpadding="5" align="center" valign="middle">
-					<tr>
-						<td><div style="margin-right:10%; background-color:white;font-weight:600;font-size:20px; padding:7px; font-family:arial">KOMBAJN JOY-4LS20, Ściana </div></td>
-						<td  rowspan="4" align="right" valign="middle" width="250" ></td>
-					</tr>
-					<tr>
-						<td><div style="background-color:#043c77; color:white; font-size:20px; padding:7px; font-family:arial">2017-05-01 do 2017-05-31 bez dni wolnych </div></td>
-					</tr>
-					<tr>
-						<td><div style="margin-right:40%; background-color:white; font-weight:600; font-size:20px; padding:7px; font-family:arial">KWK JANKOWICE  </div></td>
-					</tr>
-					<tr><td height="150"> </td>
-					</tr> 
-						<td colspan="2" >
-						<table width="100%" bgcolor="white"  align="center" valign="middle" >
-							<tr valign="middle">
-								<td class="p" valign="middle" style="color:#6f8294;"> <img src="images/czas_postoju_kombajnu.png" width="30" align="center" valign="middle" />Czas postoju kombajnu </td>
-								<td class="p" valign="middle" style="color:#0f2f57;"> <img src="images/czas_pracy_kombajnu_bez_posuwu.png" width="30" align="center" valign="middle"/>Czas pracy kombajnu bez posuwu </td>
-								<td class="p" valign="middle" style="color:#034081;"> <img src="images/czas_pracy_kombajnu_z_posuwem.png" width="30" align="center" valign="middle"/>Czas pracy kombajnu z posuwem </td>
-							</tr>
-						</table>
-						</td>
-					</table></div>
-					</td>	
+					<td><div style="margin-right:10%; background-color:white;font-weight:600;font-size:20px; padding:7px; font-family:arial">KOMBAJN JOY-4LS20, Ściana </div></td>
+					<td  rowspan="4" align="right" valign="middle" width="250" ></td>
 				</tr>
-				<tr> <td height="30"></td> <tr>
+				<tr>
+					<td><div style="background-color:#043c77; color:white; font-size:20px; padding:7px; font-family:arial">2017-05-01 do 2017-05-31 bez dni wolnych </div></td>
+				</tr>
+				<tr>
+					<td><div style="margin-right:40%; background-color:white; font-weight:600; font-size:20px; padding:7px; font-family:arial">KWK JANKOWICE  </div></td>
+				</tr>
+				<tr><td height="150"> </td>
+				</tr> 
+					<td colspan="2" >
+					<table width="100%" bgcolor="white"  align="center" valign="middle" >
+						<tr>
+							<td class="p" style="color:#6f8294;"> <img src="images/czas_postoju_kombajnu.png" width="30" align="center" valign="middle" /> Czas postoju kombajnu </td>
+							<td class="p" style="color:#0f2f57;"> <img src="images/czas_pracy_kombajnu_bez_posuwu.png" width="30" align="center" valign="middle"/> Czas pracy kombajnu bez posuwu </td>
+							<td class="p" style="color:#034081;"> <img src="images/czas_pracy_kombajnu_z_posuwem.png" width="30" align="center" valign="middle"/> Czas pracy kombajnu z posuwem </td>
+						</tr>
+					</table>
+					</td>
+			</table></div>
+			</td>	
+		</tr>
+		<tr> <td height="30"></td> <tr>
 		<tr>
 			<td>
 			<table align="center" width="95%" cellspacing="0" cellpadding="0" >
@@ -110,26 +110,45 @@
 			<td colspan="3" style="background-image:url(images/botton.jpg);" height="58" >
 			<table width="100%" >
 				<tr>	
-					<td width="37%"> <div class="dol_opis"> Data utworzenia: 2017-07-18 07:58:24 </div> </td>
+					<td width="37%"> <div class="dol_opis"><p id="date"></p></div> </td>
 					<td width="34%"> <div class="dol_opis" style="margin-left:80px;"> Strona 1 z 1 </div> </td>
 					<td width="34%"> <div class="dol_opis" style="margin-left:50px;"> EH-MineReport System </div> </td>
 				</tr>
 			</table>
 			</td>
 		</tr>
-	</table>
-	
+		</table>
 		<script>
-			document.getElementById("cpk").innerHTML = $czas_postoju_kombajnu$;
-			document.getElementById("cppn").innerHTML = $czas_pracy_pod_napieciem$;
-			document.getElementById("cp").innerHTML = $czas_pracy$;
-			document.getElementById("zp").innerHTML = $z_posuwem$;
-			document.getElementById("bp").innerHTML = $bez_posuwu$;
-			document.getElementById("pslo").innerHTML = $prad_silnika_lewego_organu$;
-			document.getElementById("pspo").innerHTML = $prad_silnika_prawego_organu$;
-			document.getElementById("pslc").innerHTML = $prad_silnika_lewego_ciagnika$;
-			document.getElementById("pspc").innerHTML = $prad_silnika_prawego_ciagnika$;
-			document.getElementById("pk").innerHTML = $predkosc_kombajnu$;		
+		var cpk =$czas_postoju_kombajnu$;
+		var cppn =$czas_pracy_pod_napieciem$;
+		var cp =$czas_pracy$;
+		var zp =$z_posuwem$;
+		var bp =$bez_posuwu$;
+		var pslo =$prad_silnika_lewego_organu$;
+		var pspo =$prad_silnika_prawego_organu$;
+		var pslc =$prad_silnika_lewego_ciagnika$;
+		var pspc =$prad_silnika_prawego_ciagnika$;
+		var pk =$predkosc_kombajnu$;
+		
+		document.getElementById("cpk").innerHTML = cpk;
+		document.getElementById("cppn").innerHTML = cppn;
+		document.getElementById("cp").innerHTML = cp;
+		document.getElementById("zp").innerHTML = zp;
+		document.getElementById("bp").innerHTML = bp;
+		document.getElementById("pslo").innerHTML = pslo;
+		document.getElementById("pspo").innerHTML = pspo;
+		document.getElementById("pslc").innerHTML = pslc;
+		document.getElementById("pspc").innerHTML = pspc;
+		document.getElementById("pk").innerHTML = pk;	
+		var today = new Date();
+		var year = today.getFullYear();
+		var month = (today.getMonth()+1); if (month<10) month='0'+month;
+		var day = today.getDate(); if (day<10) day="0"+day;
+		var hour = today.getHours(); if (hour<10) hour="0"+hour;
+		var minute = today.getMinutes(); if (minute<10) minute="0"+minute;
+		var second = today.getSeconds(); if (second<10) second="0"+second;
+		var dateTime = year+'-'+month+'-'+day+' '+hour+':'+minute+':'+second;		
+		document.getElementById("date").innerHTML = "Data utworzenia: "+ dateTime;			
 		</script>	
 	</body>
 </html>

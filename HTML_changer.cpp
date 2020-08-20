@@ -32,7 +32,7 @@ void HTML_changer::kopiowanie_pliku(System::Windows::Forms::Label^ label1)
 			lineFromFile.replace(lineFromFile.find("$"), find.length(), findInDB(query));
 			i++;
 		}
-		ofs << lineFromFile;
+		ofs << lineFromFile << std::endl;
 	}
 	ShellExecute(NULL, "open", (".\\szablonhtml/" + date + ".html" ).c_str(), NULL, NULL, SW_SHOWNORMAL);
 	

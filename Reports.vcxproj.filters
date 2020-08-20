@@ -24,13 +24,16 @@
     <ClCompile Include="IniWriter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sqlite3.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DBreader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="HTML_changer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlite3\sqlite3.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlite3\shell.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,8 +53,8 @@
     <ClInclude Include="HTML_changer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <ClInclude Include="sqlite3\sqlite3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

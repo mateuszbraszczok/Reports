@@ -136,8 +136,10 @@
     <ClCompile Include="HTML_changer.cpp" />
     <ClCompile Include="IniReader.cpp" />
     <ClCompile Include="IniWriter.cpp" />
-    <ClCompile Include="sqlite3.c">
-      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+    <ClCompile Include="sqlite3\shell.c">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
+    </ClCompile>
+    <ClCompile Include="sqlite3\sqlite3.c">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
     </ClCompile>
   </ItemGroup>
@@ -149,23 +151,13 @@
     <ClInclude Include="HTML_changer.h" />
     <ClInclude Include="IniReader.h" />
     <ClInclude Include="IniWriter.h" />
+    <ClInclude Include="sqlite3\sqlite3.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-    <Import Project="packages\sqlite3_c_plus_plus.1.0.3\build\native\sqlite3_c_plus_plus.targets" Condition="Exists('packages\sqlite3_c_plus_plus.1.0.3\build\native\sqlite3_c_plus_plus.targets')" />
-  </ImportGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('packages\sqlite3_c_plus_plus.1.0.3\build\native\sqlite3_c_plus_plus.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\sqlite3_c_plus_plus.1.0.3\build\native\sqlite3_c_plus_plus.targets'))" />
-  </Target>
+  <ImportGroup Label="ExtensionTargets" />
 </Project>
