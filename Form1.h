@@ -142,13 +142,11 @@ void InitializeComponent(void)
 	this->menuStrip1->PerformLayout();
 	this->ResumeLayout(false);
 	this->PerformLayout();
-
 }
 
 
 #pragma endregion
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-
 
 		CIniWriter iniWriter(".\\Logger.ini");
 		iniWriter.WriteString("Setting", "Name", "jianxx");
@@ -162,24 +160,17 @@ void InitializeComponent(void)
 		float fltHieght = iniReader.ReadFloat("Setting", "Height", 1.80f);
 		bool bMarriage = iniReader.ReadBoolean("Setting", "Marriage", true);*/
 
-		
 
-
-
-		
-		const char* dir= ".\\Logger.db";
+		const char* dir= ".\\test.db";
 		DBreader db(dir);
 		//db.createDB();
 		char* sql;
 		std::string data;
 		for (int i = 1; i <= 2; i++)
 		{
-
 			std::string sql1 = "SELECT Id, Name FROM Cars"; //WHERE Id ="+ std::to_string(i);
 			sql = strdup(sql1.c_str());
-
 			data = db.selectData( sql);
-
 			label1->Text = label1->Text  + gcnew String(data.c_str()) + "\r\n";
 			textBox1->Text = textBox1->Text + gcnew String(data.c_str()) + "\r\n";
 		}
@@ -193,15 +184,11 @@ void InitializeComponent(void)
 		//ShellExecute(NULL, "open", ".\\szablonhtml/szablon.html", NULL, NULL, SW_SHOWNORMAL);
 		HTML_changer changer(".\\szablonhtml/szablon.html");
 		changer.kopiowanie_pliku(label1);
-
-	
 	}
-
 
 	private: System::Void exitToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 		Application::Exit();
 	}
-
 
 };
 }

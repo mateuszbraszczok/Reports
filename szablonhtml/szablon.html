@@ -4,6 +4,7 @@
 	<meta charset="utf-8">	
 	<link rel="stylesheet" href="style.css" type="text/css"/>
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 </head>	
 <body>
 	<img src="images/top.jpg" width="100%" />
@@ -12,16 +13,16 @@
 			<td colspan="3"> <div style="background-image:url(images/middle.jpg); background-repeat: no-repeat; background-attachment: fixed; background-size: cover" > 
 				<table width="95%"  cellspacing="5" cellpadding="5" align="center" valign="middle">
 				<tr>
-					<td><div style="margin-right:10%; background-color:white;font-weight:600;font-size:20px; padding:7px; font-family:arial">KOMBAJN JOY-4LS20, Ściana </div></td>
-					<td  rowspan="4" align="right" valign="middle" width="250" ></td>
+					<td><div style="margin-right:10%; background-color:white;font-weight:600;font-size:24px; padding:8px; font-family:arial">KOMBAJN JOY-4LS20, Ściana </div></td>
+					<td  rowspan="4" align="right" valign="middle" width="250" ><div class="container" > <canvas id="myChart" width="400" height="400"></canvas></div></td>
 				</tr>
 				<tr>
-					<td><div style="background-color:#043c77; color:white; font-size:20px; padding:7px; font-family:arial">2017-05-01 do 2017-05-31 bez dni wolnych </div></td>
+					<td><div style="background-color:#043c77; color:white; font-size:24px; padding:8px; font-family:arial">2017-05-01 do 2017-05-31 bez dni wolnych </div></td>
 				</tr>
 				<tr>
-					<td><div style="margin-right:40%; background-color:white; font-weight:600; font-size:20px; padding:7px; font-family:arial">KWK JANKOWICE  </div></td>
+					<td><div style="margin-right:40%; background-color:white; font-weight:600; font-size:24px; padding:8px; font-family:arial">KWK JANKOWICE  </div></td>
 				</tr>
-				<tr><td height="150"> </td>
+				<tr><td height="200"> </td>
 				</tr> 
 					<td colspan="2" >
 					<table width="100%" bgcolor="white"  align="center" valign="middle" >
@@ -149,6 +150,32 @@
 		var second = today.getSeconds(); if (second<10) second="0"+second;
 		var dateTime = year+'-'+month+'-'+day+' '+hour+':'+minute+':'+second;		
 		document.getElementById("date").innerHTML = "Data utworzenia: "+ dateTime;			
+		</script>	
+		<script>
+			var chart = document.getElementById("myChart").getContext('2d');
+
+			//Chart.defaults.global.defaultFontFamily = "Lato";
+			//Chart.defaults.global.defaultFontSize = 16;
+
+			var data = {
+				
+				datasets: [
+					{
+						data: [ cpk, bp, zp],
+						backgroundColor: [
+							
+							"#6f8294",
+							"#0f2f57",
+							"#034081"
+						],
+						borderWidth: 0
+					}]
+			};
+
+			var pieChart = new Chart(chart, {
+			  type: 'pie',
+			  data: data
+			});
 		</script>	
 	</body>
 </html>
