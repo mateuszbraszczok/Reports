@@ -3,7 +3,7 @@
 #include "IniReader.h"
 #include <string>
 #include <windows.h>
-#include"libpq-fe.h"
+#include "libpq-fe.h"
 #include <libpq-fe.h>
 class HTML_changer
 {

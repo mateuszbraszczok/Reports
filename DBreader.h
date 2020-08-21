@@ -10,5 +10,5 @@
 public:
 	DBreader(const char* dir);
 	void createDB();	 
-	std::string selectData(char*);
+	std::string selectData(std::string sql);
 };

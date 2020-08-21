@@ -47,11 +47,12 @@ std::string HTML_changer::findInDB(std::string query)
 	PGresult* res;
 	int   nFields;
 	int   i, j;
-	conninfo = "host=localhost port=5432 dbname=mydb user=postgres password=asd";
-	CIniReader iniReader(".\\Logger.ini");
+	//conninfo = "host=localhost port=5432 dbname=mydb user=postgres password=asd";
+	
 
 
 	std::string login_data;
+	CIniReader iniReader(".\\Logger.ini");
 	char* szName = iniReader.ReadString("Login", "host", "");
 	login_data += ("host=" + std::string(szName));
 	szName = iniReader.ReadString("Login", "port", "");

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-
+#include <iostream>
 #include <algorithm>
 #include <windows.h>
 #include <string>
@@ -9,9 +9,9 @@
 #include "IniWriter.h"
 #include "DBreader.h"
 #include "HTML_changer.h"
-#include<stdio.h>
-#include<stdlib.h>
-#include"libpq-fe.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "libpq-fe.h"
 #include <libpq-fe.h>
 
 
@@ -147,7 +147,7 @@ void InitializeComponent(void)
 
 #pragma endregion
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-
+		button1->Enabled = false;
 		CIniWriter iniWriter(".\\Logger.ini");
 		iniWriter.WriteString("Setting", "Name", "jianxx");
 		iniWriter.WriteString("Date", "Time", "2020-08-16");
@@ -161,29 +161,39 @@ void InitializeComponent(void)
 		bool bMarriage = iniReader.ReadBoolean("Setting", "Marriage", true);*/
 
 
-		const char* dir= ".\\test.db";
-		DBreader db(dir);
+		const char* dir = ".\\test.db";
+		
+		DBreader* db = new DBreader(dir);
+		
+		
 		//db.createDB();
-		char* sql;
+		std::string zapytanieSQL;
 		std::string data;
-		for (int i = 1; i <= 2; i++)
-		{
-			std::string sql1 = "SELECT Id, Name FROM Cars"; //WHERE Id ="+ std::to_string(i);
-			sql = strdup(sql1.c_str());
-			data = db.selectData( sql);
-			label1->Text = label1->Text  + gcnew String(data.c_str()) + "\r\n";
-			textBox1->Text = textBox1->Text + gcnew String(data.c_str()) + "\r\n";
+		try {
+			for (int i = 1; i <= 2; i++)
+			{
+				zapytanieSQL = "SELECT Id, Name FROM Cars"; //WHERE Id ="+ std::to_string(i);
+				data = "blabla";		
+				data = db->selectData(zapytanieSQL);		
+				label1->Text = label1->Text  + gcnew String(data.c_str()) + "\r\n";
+				textBox1->Text = textBox1->Text + gcnew String(data.c_str()) + "\r\n";
+			}
+		}
+		catch (std::string  e) {
+			MessageBox::Show(gcnew String(e.c_str()), "Important Message", MessageBoxButtons::OK);
 		}
 		label1->Text = label1->Text+"\n"+gcnew String(data.c_str());
-
+		delete db;
 		//MessageBox::Show("Hello, world.", "Important Message", MessageBoxButtons::YesNo);
 		
 
 		int lib_ver = PQlibVersion();
 		//label1->Text = lib_ver.ToString();
 		//ShellExecute(NULL, "open", ".\\szablonhtml/szablon.html", NULL, NULL, SW_SHOWNORMAL);
-		HTML_changer changer(".\\szablonhtml/szablon.html");
-		changer.kopiowanie_pliku(label1);
+		HTML_changer *changer = new HTML_changer(".\\szablonhtml/szablon.html");
+		changer->kopiowanie_pliku(label1);
+		delete changer;
+		button1->Enabled = true;
 	}
 
 	private: System::Void exitToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
