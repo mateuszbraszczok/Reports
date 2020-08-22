@@ -179,7 +179,7 @@ void InitializeComponent(void)
 				textBox1->Text = textBox1->Text + gcnew String(data.c_str()) + "\r\n";
 			}
 		}
-		catch (std::string  e) {
+		catch (std::string e) {
 			MessageBox::Show(gcnew String(e.c_str()), "Important Message", MessageBoxButtons::OK);
 		}
 		label1->Text = label1->Text+"\n"+gcnew String(data.c_str());
@@ -190,9 +190,17 @@ void InitializeComponent(void)
 		int lib_ver = PQlibVersion();
 		//label1->Text = lib_ver.ToString();
 		//ShellExecute(NULL, "open", ".\\szablonhtml/szablon.html", NULL, NULL, SW_SHOWNORMAL);
-		HTML_changer *changer = new HTML_changer(".\\szablonhtml/szablon.html");
-		changer->kopiowanie_pliku(label1);
-		delete changer;
+		try
+		{
+			HTML_changer* changer = new HTML_changer(".\\szablonhtml/szablon.html");
+			changer->kopiowanie_pliku(label1);
+			delete changer;
+		}
+		catch (std::string e)
+		{
+			MessageBox::Show(gcnew String(e.c_str()), "Important Message", MessageBoxButtons::OK);
+			//delete changer;
+		}
 		button1->Enabled = true;
 	}
 

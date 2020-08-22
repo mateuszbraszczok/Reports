@@ -20,8 +20,6 @@ void HTML_changer::kopiowanie_pliku(System::Windows::Forms::Label^ label1)
 		std::string query;	
 		while (lineFromFile.find("$") != std::string::npos)
 		{
-			
-			System::Diagnostics::Debug::WriteLine("dds");
 			find = lineFromFile.substr(lineFromFile.find("$"), lineFromFile.find("$", lineFromFile.find("$") + 1) - lineFromFile.find("$") + 1);
 			
 			query = " SELECT " + find.substr(1,find.length()-2) + " FROM dane_do_szablonu WHERE date= '" + date+"'";
@@ -42,14 +40,12 @@ void HTML_changer::kopiowanie_pliku(System::Windows::Forms::Label^ label1)
 std::string HTML_changer::findInDB(std::string query)
 {
 	std::string returnValue;
-	const char* conninfo;
 	PGconn* conn;
 	PGresult* res;
-	int   nFields;
-	int   i, j;
-	//conninfo = "host=localhost port=5432 dbname=mydb user=postgres password=asd";
+	int nFields;
+	int i, j;
+	//const char* conninfo = "host=localhost port=5432 dbname=mydb user=postgres password=asd";
 	
-
 
 	std::string login_data;
 	CIniReader iniReader(".\\Logger.ini");
@@ -65,23 +61,19 @@ std::string HTML_changer::findInDB(std::string query)
 	login_data += (" password=" + std::string(szName));
 
 	conn = PQconnectdb(login_data.c_str());
-
 	/* Check to see that the backend connection was successfully made */
 	if (PQstatus(conn) != CONNECTION_OK)
 	{
-		fprintf(stderr, "Connection to database failed: %s",
-			PQerrorMessage(conn));
-		exit_nicely(conn);
-		return "error1";
+		PQfinish(conn);
+		throw std::string("Connection to database failed: " + std::string(PQerrorMessage(conn)));	
 	}
 
 	res = PQexec(conn, "BEGIN");
 	if (PQresultStatus(res) != PGRES_COMMAND_OK)
 	{
-		fprintf(stderr, "BEGIN command failed: %s", PQerrorMessage(conn));
 		PQclear(res);
-		exit_nicely(conn);
-		return "error2";
+		PQfinish(conn);
+		throw std::string("BEGIN command failed: " + std::string(PQerrorMessage(conn)));	
 	}
 
 	/*
@@ -96,19 +88,18 @@ std::string HTML_changer::findInDB(std::string query)
 	res = PQexec(conn, ("DECLARE myportal CURSOR FOR" + query).c_str() );
 	if (PQresultStatus(res) != PGRES_COMMAND_OK)
 	{
-		fprintf(stderr, "DECLARE CURSOR failed: %s", PQerrorMessage(conn));
 		PQclear(res);
-		exit_nicely(conn);
-		return ("DECLARE myportal CURSOR FOR" + query);
+		PQfinish(conn);
+		throw std::string("DECLARE CURSOR failed: " + std::string(PQerrorMessage(conn)));
 	}
 	PQclear(res);
 
 	res = PQexec(conn, "FETCH ALL in myportal");
 	if (PQresultStatus(res) != PGRES_TUPLES_OK)
 	{
-		fprintf(stderr, "FETCH ALL failed: %s", PQerrorMessage(conn));
 		PQclear(res);
-		exit_nicely(conn);
+		PQfinish(conn);
+		throw std::string("FETCH ALL failed: " + std::string(PQerrorMessage(conn)));
 	}
 
 	/* first, print out the attribute names */
@@ -116,22 +107,21 @@ std::string HTML_changer::findInDB(std::string query)
 	
 	for (i = 0; i < nFields; i++)
 	{
-		System::Diagnostics::Debug::WriteLine("dds");
-		printf("%-15s", PQfname(res, i));
+		//printf("%-15s", PQfname(res, i));
 		//label1->Text = label1->Text + gcnew String(PQfname(res, i)) + "\r\n";
 	}
-	printf("\n\n");
+	//printf("\n\n");
 
 	/* next, print out the rows */
 	for (i = 0; i < PQntuples(res); i++)
 	{
 		for (j = 0; j < nFields; j++)
 		{
-			printf("%-15s", PQgetvalue(res, i, j));
+			//printf("%-15s", PQgetvalue(res, i, j));
 			//label1->Text = label1->Text + gcnew String(PQgetvalue(res, i, j)) + "\r\n";
 			returnValue = PQgetvalue(res, i, j);
 		}
-		printf("\n");
+		//printf("\n");
 	}
 
 	PQclear(res);
@@ -148,11 +138,3 @@ std::string HTML_changer::findInDB(std::string query)
 	PQfinish(conn);
 	return returnValue;
 }
-
-void HTML_changer::exit_nicely(PGconn* conn)
-{
-	PQfinish(conn);
-	//exit(1);
-}
-
-
