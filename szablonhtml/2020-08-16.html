@@ -6,15 +6,15 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 </head>	
-<body width="50%">
-	<img src="images/top.jpg" width="100%" />
-		<table  width ="50%" cellspacing="0" cellpadding="0" >	
-		<tr>
+<body>
+	<header><img src="images/top.jpg" width="100%" /></header>
+	<main>
+		<table  width ="100%" cellspacing="0" cellpadding="0" >	
 			<td colspan="3"> <div style="background-image:url(images/middle.jpg); background-repeat: no-repeat; background-attachment: fixed; background-size: cover" > 
-				<table width="95%"  cellspacing="5" cellpadding="5" align="center" valign="middle">
+			<table width="95%"  cellspacing="5" cellpadding="5" align="center" valign="middle">
 				<tr>
 					<td><div style="margin-right:10%; background-color:white;font-weight:600;font-size:24px; padding:8px; font-family:arial">KOMBAJN JOY-4LS20, Ściana </div></td>
-					<td  rowspan="4" align="right" valign="middle" width="250" ><div class="container" > <canvas id="myChart" width="400" height="400"></canvas></div></td>
+					<td  rowspan="4" align="right" valign="middle" width="250" ><div class="container" > <canvas id="myChart" width="150" height="150"></canvas></div></td>
 				</tr>
 				<tr>
 					<td><div style="background-color:#043c77; color:white; font-size:24px; padding:8px; font-family:arial">2017-05-01 do 2017-05-31 bez dni wolnych </div></td>
@@ -22,7 +22,7 @@
 				<tr>
 					<td><div style="margin-right:40%; background-color:white; font-weight:600; font-size:24px; padding:8px; font-family:arial">KWK JANKOWICE  </div></td>
 				</tr>
-				<tr><td height="200"> </td>
+				<tr><td height="100"> </td>
 				</tr> 
 					<td colspan="2" >
 					<table width="100%" bgcolor="white"  align="center" valign="middle" >
@@ -35,90 +35,88 @@
 					</td>
 			</table></div>
 			</td>	
-		</tr>
-		<tr> <td height="30"></td> <tr>
-		<tr>
-			<td>
-			<table align="center" width="95%" cellspacing="0" cellpadding="0" >
-				<tr bgcolor=#6F8294 height="43">
-					<td width="45%"> <div class="naglowek">Czas pracy kombajnu</div> </td> 
-					<td> <div class="naglowek">Godz:min:sek</div> </td> 
-					<td> <div class="naglowek">Wartość procentowa</div> </td>
-				</tr>
-				<tr height="43">		
-					<td> <div class="kolumna_opis">Czas postoju</div></td>
-					<td> <div class="kolumna_wartosc"> <p id="cpk"></p> </div></td> 	
-					<td> <div class="kolumna_wartosc">czas_postoju_kombajnu w %</div></td>
-				</tr>
-				<tr bgcolor=#F3F5F5 height="43">
-					<td> <div class="kolumna_opis">Czas pracy pod napięciem </div> </td>
-					<td> <div class="kolumna_wartosc"> <p id="cppn"></p> </div> </td>
-					<td> <div class="kolumna_wartosc">czas_pracy_pod_napięciem w %</div></td>
-					<td> </td>
-				</tr>
-				<tr height="43">
-					<td> <div class="kolumna_opis">Czas pracy</div> </td>
-					<td> <div class="kolumna_wartosc"> <p id="cp"></p> </div></td>
-					<td> <div class="kolumna_wartosc">Czas_pracy w %</div> </td>
-				</tr>
-				<tr bgcolor=#F3F5F5 height="43">
-					<td> <div class="z_bez_posuwu">z posuwem</div> </td>
-					<td> <div class="kolumna_wartosc"> <p id="zp"></p> </div> </td>
-					<td> <div class="kolumna_wartosc">z_posuwem w % </div> </td>
-				</tr>
-				<tr height="43">
-					<td> <div class="z_bez_posuwu">bez posuwu</div> </td>
-					<td> <div class="kolumna_wartosc">  <p id="bp"></p>  </div> </td>
-					<td> <div class="kolumna_wartosc">bez_posuwu w %</div> </td>
-				</tr>
-				<tr bgcolor=#6F8294 height="43">
-					<td> <div class="naglowek">Parametry pracy kombajnu</div> </td>
-					<td> <div class="naglowek">Wartość nominalna</div> </td>
-					<td> <div class="naglowek">Wartość średnia</div> </td>				
-				</tr>
-				<tr height="43">
-					<td> <div class="kolumna_opis" >Prąd silnika lewego organu</div> </td>
-					<td> <div class="kolumna_wartosc">213 A</div> </td>
-					<td> <div class="kolumna_wartosc"> <p id="pslo"></p> </div> </td>
-				</tr>
-				<tr bgcolor=#F3F5F5 height="43">
-					<td> <div class="kolumna_opis">Prąd silnika prawego organu</div> </td>
-					<td> <div class="kolumna_wartosc">213 A</div> </td>
-					<td> <div class="kolumna_wartosc"> <p id="pspo"></p> </div> </td>
-				</tr>
-				<tr height="43">
-					<td> <div class="kolumna_opis">Prąd silnika lewego ciągnika</div> </td>
-					<td> <div class="kolumna_wartosc">54 A</div> </td>
-					<td> <div class="kolumna_wartosc"> <p id="pslc"></p> </div> </td>
-				</tr>
-				<tr bgcolor=#F3F5F5 height="43">
-					<td> <div class="kolumna_opis">Prąd silnika prawego ciągnika </div> </td>
-					<td> <div class="kolumna_wartosc"> 54 A </div> </td>
-					<td> <div class="kolumna_wartosc"><p id="pspc"></p></div> </td>
-				</tr>
-				<tr height="43">
-					<td> <div class="kolumna_opis">Prędkość kombajnu </div> </td>
-					<td> <div class="kolumna_wartosc">  18 m/min </div> </td>
-					<td> <div class="kolumna_wartosc"><p id="pk"></p></div> </td>
-				</tr>
-				<tr>
-				<td height="45"></td>
-				</tr>
-			</table>	
-			</td>
-		</tr>
-		<tr>
-			<td colspan="3" style="background-image:url(images/botton.jpg);" height="58" >
-			<table width="100%" >
-				<tr>	
-					<td width="37%"> <div class="dol_opis"><p id="date"></p></div> </td>
-					<td width="34%"> <div class="dol_opis" style="margin-left:80px;"> Strona 1 z 1 </div> </td>
-					<td width="34%"> <div class="dol_opis" style="margin-left:50px;"> EH-MineReport System </div> </td>
-				</tr>
-			</table>
-			</td>
-		</tr>
 		</table>
+		</br>
+		
+		<table align="center" width="100%" cellspacing="0" cellpadding="0" >
+			<tr bgcolor=#6F8294 height="50">
+				<td width="45%"> <div class="naglowek">Czas pracy kombajnu</div> </td> 
+				<td> <div class="naglowek">Godz:min:sek</div> </td> 
+				<td> <div class="naglowek">Wartość procentowa</div> </td>
+			</tr>
+			<tr height="50">		
+				<td> <div class="kolumna_opis">Czas postoju</div></td>
+				<td> <div class="kolumna_wartosc"> <p id="cpk"></p> </div></td> 	
+				<td> <div class="kolumna_wartosc">czas_postoju_kombajnu w %</div></td>
+			</tr>
+			<tr bgcolor=#F3F5F5 height="50">
+				<td> <div class="kolumna_opis">Czas pracy pod napięciem </div> </td>
+				<td> <div class="kolumna_wartosc"> <p id="cppn"></p> </div> </td>
+				<td> <div class="kolumna_wartosc">czas_pracy_pod_napięciem w %</div></td>
+				<td> </td>
+			</tr>
+			<tr height="50">
+				<td> <div class="kolumna_opis">Czas pracy</div> </td>
+				<td> <div class="kolumna_wartosc"> <p id="cp"></p> </div></td>
+				<td> <div class="kolumna_wartosc">Czas_pracy w %</div> </td>
+			</tr>
+			<tr bgcolor=#F3F5F5 height="50">
+				<td> <div class="kolumna_opis" style="margin-left: 60px;">z posuwem</div> </td>
+				<td> <div class="kolumna_wartosc"> <p id="zp"></p> </div> </td>
+				<td> <div class="kolumna_wartosc">z_posuwem w % </div> </td>
+			</tr>
+			<tr height="50">
+				<td> <div class="kolumna_opis" style="margin-left: 60px;">bez posuwu</div> </td>
+				<td> <div class="kolumna_wartosc">  <p id="bp"></p>  </div> </td>
+				<td> <div class="kolumna_wartosc">bez_posuwu w %</div> </td>
+			</tr>
+			<tr bgcolor=#6F8294 height="50">
+				<td> <div class="naglowek">Parametry pracy kombajnu</div> </td>
+				<td> <div class="naglowek">Wartość nominalna</div> </td>
+				<td> <div class="naglowek">Wartość średnia</div> </td>				
+			</tr>
+			<tr height="50">
+				<td> <div class="kolumna_opis" >Prąd silnika lewego organu</div> </td>
+				<td> <div class="kolumna_wartosc">213 A</div> </td>
+				<td> <div class="kolumna_wartosc"> <p id="pslo"></p> </div> </td>
+			</tr>
+			<tr bgcolor=#F3F5F5 height="50">
+				<td> <div class="kolumna_opis">Prąd silnika prawego organu</div> </td>
+				<td> <div class="kolumna_wartosc">213 A</div> </td>
+				<td> <div class="kolumna_wartosc"> <p id="pspo"></p> </div> </td>
+			</tr>
+			<tr height="50">
+				<td> <div class="kolumna_opis">Prąd silnika lewego ciągnika</div> </td>
+				<td> <div class="kolumna_wartosc">54 A</div> </td>
+				<td> <div class="kolumna_wartosc"> <p id="pslc"></p> </div> </td>
+			</tr>
+			<tr bgcolor=#F3F5F5 height="50">
+				<td> <div class="kolumna_opis">Prąd silnika prawego ciągnika </div> </td>
+				<td> <div class="kolumna_wartosc"> 54 A </div> </td>
+				<td> <div class="kolumna_wartosc"><p id="pspc"></p></div> </td>
+			</tr>
+			<tr height="50">
+				<td> <div class="kolumna_opis">Prędkość kombajnu </div> </td>
+				<td> <div class="kolumna_wartosc">  18 m/min </div> </td>
+				<td> <div class="kolumna_wartosc"><p id="pk"></p></div> </td>
+			</tr>
+			<tr>
+			<td height="30"></td>
+			</tr>
+		</table>	
+		
+		</main>
+		<footer style="background-image:url(images/botton.jpg); height: 60px">
+		<table width="100%" >
+			<tr>	
+				<td width="37%"> <div class="dol_opis"><p id="date"></p></div> </td>
+				<td width="34%"> <div class="dol_opis" style="margin-left:80px;"> Strona 1 z 1 </div> </td>
+				<td width="34%"> <div class="dol_opis" style="margin-left:50px;"> EH-MineReport System </div> </td>
+			</tr>
+		</table>
+		</footer>
+		
+		
 		<script>
 		var cpk =73;
 		var cppn =23;
